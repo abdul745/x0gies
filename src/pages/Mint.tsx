@@ -22,17 +22,17 @@ export const Mint: React.FC = () => {
     setNoOfMints(e.target.value);
   };
 
-  useEffect(() => {
-    async function getData() {
-      const _total = await contract.totalSupply();
+  // useEffect(() => {
+  //   async function getData() {
+  //     const _total = await contract.totalSupply();
 
-      setTotalSupply(Number(_total));
-    }
+  //     setTotalSupply(Number(_total));
+  //   }
 
-    if (address) getData();
+  //   if (address) getData();
 
-    return () => { };
-  }, [signer, address]);
+  //   return () => { };
+  // }, [signer, address]);
 
   async function mint() {
     try {
