@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Button, Social, Image, Text , List}  from "components";
+import { Button, Social, Image, Text, List } from "components";
 import { Layout } from "../layouts";
 import { getContract } from "../utils";
 import { useAddress, useSigner, useConnect, metamaskWallet } from "@thirdweb-dev/react";
@@ -19,13 +19,13 @@ export const Burn: React.FC = () => {
   const switchChain = useSwitchChain();
 
   const [tokenId, setTokenId] = useState('')
-  const [burntNfts , setBurntNfts] = useState('')
+  const [burntNfts, setBurntNfts] = useState('')
 
 
   const handleSetTokenId = (e) => {
     setTokenId(e.target.value);
   };
-  
+
   useEffect(() => {
     async function getBurntNfts() {
       const _total = await contract.burntNFTs(address);
@@ -42,24 +42,28 @@ export const Burn: React.FC = () => {
       const wallet = await connect(metamaskConfig);
       console.log('connected to ', wallet)
       await switchChain(Mumbai.chainId)
-      const rnfts = await contract.burntNFTs(address)
-      console.log(rnfts.toNumber() , 'line34')
-
-      try {
-        const trx = await contract.burn(tokenId.toString() , {
-          gasLimit : 100000
-        });
-        const transactionReceipt = await trx.wait();
-        if (transactionReceipt.status === 1) {
-          toast.success(`You have burned ${tokenId} X0gies`);
-          console.log("Burned successful!");
-          console.log("Burned token ID:", transactionReceipt);
-        } else {
-          console.error("Burned failed:", transactionReceipt.status);
-        }
-      } catch (e) {
-        console.log(e, 'line 45')
-      }
+      const isPaused = await contract.PAUSED();
+      (!isPaused)
+        ? (async () => {
+          try {
+            const trx = await contract.burn(tokenId.toString(), {
+              gasLimit: 100000
+            });
+            const transactionReceipt = await trx.wait();
+            if (transactionReceipt.status === 1) {
+              toast.success(`You have burned ${tokenId} X0gies`);
+              console.log("Burned successful!");
+              console.log("Burned token ID:", transactionReceipt);
+              const _total = await contract.burntNFTs(address);
+              setBurntNfts(_total.toNumber());
+            } else {
+              console.error("Burned failed:", transactionReceipt.status);
+            }
+          } catch (e) {
+            console.log(e, 'line 45')
+          }
+        })()
+        : alert("Contract is Paused");
     } catch (e) {
       console.log(e)
     }
@@ -87,23 +91,23 @@ export const Burn: React.FC = () => {
             className="sm:text-3xl md:text-[32px] text-[34px] text-center text-shadow-ts2 text-white-A700 w-auto"
             size="txtKemcoPixelBold34"
           >
-           Burnt NFTs : {burntNfts}
+            Burnt NFTs : {burntNfts}
           </Text>
           <input value={tokenId} onChange={handleSetTokenId} className="h-[50px] grayscale-[1]  w-[230px]" placeholder='NFT Token Id' />
           <Button
-              className="font-kemcopixel cursor-pointer h-[41px] text-center text-xl w-[229px]"
-              shape="round"
-              color="white_A700"
-              size="xs"
-              variant="fill"
+            className="font-kemcopixel cursor-pointer h-[41px] text-center text-xl w-[229px]"
+            shape="round"
+            color="white_A700"
+            size="xs"
+            variant="fill"
 
-              onClick={() => {
-                burnToken().then(() => { });
-              }}
-            >
-              Burn X0GIES
-            </Button>
-    
+            onClick={() => {
+              burnToken().then(() => { });
+            }}
+          >
+            Burn X0GIES
+          </Button>
+
 
         </div>
       </div>
