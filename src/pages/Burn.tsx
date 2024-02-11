@@ -51,7 +51,7 @@ export const Burn: React.FC = () => {
             });
             const transactionReceipt = await trx.wait();
             if (transactionReceipt.status === 1) {
-              toast.success(`You have burned ${tokenId} X0gies`);
+              toast.success(`You have Burnt 1 X0gies Token with Token ID: ${tokenId}`);
               console.log("Burned successful!");
               console.log("Burned token ID:", transactionReceipt);
               const _total = await contract.burntNFTs(address);

@@ -5,7 +5,7 @@
     import "@openzeppelin/contracts/access/Ownable.sol";
 
 
-    contract X0giesA is ERC721A , Ownable(msg.sender) {
+    contract X0giesA is ERC721A , Ownable {
         // uint256 private _nextTokenId();
         uint256 public PUBLIC_SUPPLY;
         uint256 public MAX_MINT_PER_TX;
@@ -113,10 +113,6 @@
         }
 
         function burn(uint256 tokenId) external isNotPaused{
-            // require(
-            //     isApprovedOrOwner(_msgSender(), tokenId),
-            //     "Not approved or owner"
-            // );
         require(ownerOf(tokenId) ==  msg.sender , "You're not the owner");
             _burn(tokenId);
             burntNFTs[_msgSender()]++;
