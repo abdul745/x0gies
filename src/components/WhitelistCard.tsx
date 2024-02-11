@@ -34,8 +34,9 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
   const [isWhitelisted, setIsWhitelisted] = useState(false);
   const [possibleWlMint, setPossibleWLMint] = useState(0);
 
-  const [MAX, setMax] = useState(1000);
-  const [totalSupply, setTotalSupply] = useState(0);
+  const [MAX, setMax] = useState(2435);
+  const [totalNftsMinted, setTotalNftsMinted] = useState(0);
+
 
   useEffect(() => {
     const proof = merkleFunc(address);
@@ -47,13 +48,24 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
       const claimedTokens = await contract.claimedWhitelistTokens(address);
       const remainingAllowedTokens = allowedFreeMints - claimedTokens;
       setPossibleWLMint(Number(remainingAllowedTokens));
-      setTotalSupply(Number(4444));
+      // setTotalSupply(Number(4444));
     }
 
     if (address) getData();
     setIsWhitelisted(proof.length > 0);
 
     return () => {};
+  }, [signer, address]);
+
+  useEffect(() => {
+    async function getData() {
+      const _total = await contract.totalSupply();
+      setTotalNftsMinted(Number(_total));
+    }
+
+    if (address) getData();
+
+    return () => { };
   }, [signer, address]);
 
   async function whitelistMint() {
@@ -99,7 +111,7 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
                 className="text-base text-center text-white-A700"
                 size="txtKemcoPixelBold18"
               >
-                {totalSupply}
+                {totalNftsMinted}
               </Text>
               <Text
                 className="text-base text-center text-white-A700"

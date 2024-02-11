@@ -4,22 +4,27 @@ pragma solidity 0.8.20;
 import "erc721a/contracts/ERC721A.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract X0giesA is ERC721A, Ownable {
+
+contract X0giesA is ERC721A , Ownable(msg.sender) {
     // uint256 private _nextTokenId();
-
-    constructor() ERC721A("X0giesA", "X0G") {
-        MAX_SUPPLY = 4444;
-        MAX_MINT_PER_TX = 10;
-        PUBLIC_MINT_PRICE = 0.004 ether;
-        PAUSED = true;
-    }
-
-    uint256 public MAX_SUPPLY;
+    uint256 public PUBLIC_SUPPLY;
     uint256 public MAX_MINT_PER_TX;
     uint256 public PUBLIC_MINT_PRICE;
     uint256 public TOTAL_NFTS_MINTED;
 
     bool public PAUSED;
+    constructor() ERC721A("X0giesA", "X0G") {
+        PUBLIC_SUPPLY = 2435;
+        MAX_MINT_PER_TX = 10;
+        PUBLIC_MINT_PRICE = 0.004 ether;
+        PAUSED = true;
+    }
+
+  
+    function getPaused() public view returns (bool) {
+    return PAUSED;
+    }
+
     modifier isNotPaused() {
         require(!PAUSED, "Contract is Paused");
         _;
@@ -80,7 +85,7 @@ contract X0giesA is ERC721A, Ownable {
     }
 
     function setMaxSupply(uint256 _maxSupply) external onlyOwner {
-        MAX_SUPPLY = _maxSupply;
+        PUBLIC_SUPPLY = _maxSupply;
     }
 
     function setMaxMintPerTx(uint256 _maxMintPerTx) external onlyOwner {
@@ -112,7 +117,7 @@ contract X0giesA is ERC721A, Ownable {
         //     isApprovedOrOwner(_msgSender(), tokenId),
         //     "Not approved or owner"
         // );
-
+    require(ownerOf(tokenId) ==  msg.sender , "You're not the owner");
         _burn(tokenId);
         burntNFTs[_msgSender()]++;
     }
