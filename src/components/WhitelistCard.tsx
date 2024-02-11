@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+import {
+  useAddress,
+  useSigner,
+  useConnect,
+  metamaskWallet,
+} from "@thirdweb-dev/react";
 import { Button, Image, Text } from "components";
-import { useAddress, useSigner } from "@thirdweb-dev/react";
 import { getContract, merkleFunc } from "../utils";
 import toast from "react-hot-toast";
 
@@ -16,6 +21,12 @@ type WhiteListCardProps = Omit<
   }>;
 
 export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
+  const connect = useConnect();
+  const metamaskConfig = metamaskWallet();
+  const [noOfMints, setNoOfMints] = useState("");
+  const handleSetNoOfMints = (e) => {
+    setNoOfMints(e.target.value);
+  };
   const address = useAddress();
   const signer = useSigner();
   const contract = getContract(signer);
@@ -30,12 +41,13 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
     const proof = merkleFunc(address);
     console.log("... proof", proof);
     async function getData() {
-      const whitelist_count = await contract.whitelist_mint_count(address);
 
-      const _total = await contract.totalSupply();
-
-      setPossibleWLMint(Number(whitelist_count));
-      setTotalSupply(Number(_total));
+      const allowedFreeMints = await contract.whitelistMints(address);
+      console.log(allowedFreeMints.toNumber());
+      const claimedTokens = await contract.claimedWhitelistTokens(address);
+      const remainingAllowedTokens = allowedFreeMints - claimedTokens;
+      setPossibleWLMint(Number(remainingAllowedTokens));
+      setTotalSupply(Number(4444));
     }
 
     if (address) getData();
@@ -45,33 +57,26 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
   }, [signer, address]);
 
   async function whitelistMint() {
-    const adr = await signer.getAddress();
-    const hexProof = merkleFunc(adr);
-    const whitelist_count = await contract.whitelist_mint_count(adr);
-    setPossibleWLMint(Number(whitelist_count));
-    const balance = await contract.balanceOf(adr);
-    if (Number(whitelist_count) < Number(balance)) {
-      toast.error(
-        `you have reached whitelist limit: Allowed ${Number(
-          whitelist_count,
-        )} mints`,
-      );
-      return;
-    }
-    // if(whitelist_count > ) {
-
-    // }
-    try {
-      const trx = await contract.whitelistMint(hexProof, {
-        gasLimit: 2000000,
-      });
-      const receipt = await trx.wait();
-      console.log("receipt", receipt);
-      if (receipt.status === 1) {
-        toast.success("you have minted 1 x0gies");
+    const allowedFreeMints = await contract.whitelistMints(address);
+    console.log(allowedFreeMints.toNumber());
+    const claimedTokens = await contract.claimedWhitelistTokens(address);
+    const remainingAllowedTokens = allowedFreeMints - claimedTokens;
+    if (remainingAllowedTokens >= Number(noOfMints) ) {
+      try {
+        const trx = await contract.whitelistedMinting(noOfMints, {
+          gasLimit: 2000000,
+        });
+        const receipt = await trx.wait();
+        console.log("receipt", receipt);
+        if (receipt.status === 1) {
+          toast.success(`You Have Minted ${noOfMints} X0GIES`);
+        }
+        setPossibleWLMint(remainingAllowedTokens-Number(noOfMints))
+      } catch (error) {
+        console.log("error", error);
       }
-    } catch (error) {
-      console.log("error", error);
+    } else {
+      alert("Not Enough NFTs Allowed to Mint!");
     }
   }
 
@@ -109,7 +114,7 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
                 {MAX}
               </Text>
             </div>
-            <div className="flex flex-col gap-9 items-end justify-start w-auto sm:w-full">
+            <div className="flex flex-col gap-9 items-center justify-start w-auto sm:w-full">
               <Image
                 className="h-[390px] md:h-auto object-cover w-[390px] sm:w-full"
                 src="img/main-1-1.gif"
@@ -126,13 +131,19 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
                   className="text-3xl sm:text-[26px] md:text-[28px] text-center text-white-A700 w-[21px]"
                   size="txtKemcoPixelBold18"
                 >
-                  {possibleWlMint == 0 ? "...." : possibleWlMint}
+                  {possibleWlMint }
                 </Text>
               </div>
             </div>
           </div>
+          <input
+            value={noOfMints}
+            onChange={handleSetNoOfMints}
+            className="h-[40px] grayscale-[1]  w-[230px]"
+            placeholder="No of Mints"
+          />
           <button
-            disabled={!isWhitelisted}
+            disabled={isWhitelisted}
             onClick={() => {
               whitelistMint().then(() => {
                 //

@@ -21,6 +21,21 @@ const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "ApprovalCallerNotOwnerNorApproved",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "ApprovalQueryForNonexistentToken",
+		"type": "error"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -35,165 +50,37 @@ const CONTRACT_ABI = [
 		],
 		"name": "approve",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "burn",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "initialOwner",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"inputs": [],
-		"name": "ERC721EnumerableForbiddenBatchMint",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "ERC721IncorrectOwner",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ERC721InsufficientApproval",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "approver",
-				"type": "address"
-			}
-		],
-		"name": "ERC721InvalidApprover",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			}
-		],
-		"name": "ERC721InvalidOperator",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "ERC721InvalidOwner",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "receiver",
-				"type": "address"
-			}
-		],
-		"name": "ERC721InvalidReceiver",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			}
-		],
-		"name": "ERC721InvalidSender",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ERC721NonexistentToken",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			}
-		],
-		"name": "ERC721OutOfBoundsIndex",
+		"name": "BalanceQueryForZeroAddress",
 		"type": "error"
 	},
 	{
 		"inputs": [],
-		"name": "EnforcedPause",
+		"name": "MintERC2309QuantityExceedsLimit",
 		"type": "error"
 	},
 	{
 		"inputs": [],
-		"name": "ExpectedPause",
+		"name": "MintToZeroAddress",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "MintZeroQuantity",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "OwnerQueryForNonexistentToken",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "OwnershipNotInitializedForExtraData",
 		"type": "error"
 	},
 	{
@@ -204,7 +91,37 @@ const CONTRACT_ABI = [
 				"type": "uint256"
 			}
 		],
-		"name": "mint",
+		"name": "publicMinting",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "safeTransferFrom",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
@@ -213,22 +130,146 @@ const CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "owner",
+				"name": "from",
 				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_data",
+				"type": "bytes"
 			}
 		],
-		"name": "OwnableInvalidOwner",
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			}
+		],
+		"name": "setApprovalForAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "baseURI",
+				"type": "string"
+			}
+		],
+		"name": "setBaseURI",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_maxMintPerTx",
+				"type": "uint256"
+			}
+		],
+		"name": "setMaxMintPerTx",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_maxSupply",
+				"type": "uint256"
+			}
+		],
+		"name": "setMaxSupply",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_publicMintPrice",
+				"type": "uint256"
+			}
+		],
+		"name": "setPublicMintPrice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "TransferCallerNotOwnerNorApproved",
 		"type": "error"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "account",
+				"name": "from",
 				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
 			}
 		],
-		"name": "OwnableUnauthorizedAccount",
+		"name": "transferFrom",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "TransferFromIncorrectOwner",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TransferToNonERC721ReceiverImplementer",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TransferToZeroAddress",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "URIQueryForNonexistentToken",
 		"type": "error"
 	},
 	{
@@ -285,32 +326,31 @@ const CONTRACT_ABI = [
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "uint256",
-				"name": "_fromTokenId",
+				"name": "fromTokenId",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "_toTokenId",
+				"name": "toTokenId",
 				"type": "uint256"
-			}
-		],
-		"name": "BatchMetadataUpdate",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
+			},
 			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
 			}
 		],
-		"name": "MetadataUpdate",
+		"name": "ConsecutiveTransfer",
 		"type": "event"
 	},
 	{
@@ -331,141 +371,6 @@ const CONTRACT_ABI = [
 		],
 		"name": "OwnershipTransferred",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "pause",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "Paused",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "data",
-				"type": "bytes"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			}
-		],
-		"name": "setApprovalForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_maxMintPerTx",
-				"type": "uint256"
-			}
-		],
-		"name": "setMaxMintPerTx",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_maxSupply",
-				"type": "uint256"
-			}
-		],
-		"name": "setMaxSupply",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_publicMintPrice",
-				"type": "uint256"
-			}
-		],
-		"name": "setPublicMintPrice",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -496,29 +401,6 @@ const CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "newOwner",
 				"type": "address"
 			}
@@ -529,24 +411,17 @@ const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "unpause",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "_noOfMints",
+				"type": "uint256"
 			}
 		],
-		"name": "Unpaused",
-		"type": "event"
+		"name": "whitelistedMinting",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -702,19 +577,6 @@ const CONTRACT_ABI = [
 	},
 	{
 		"inputs": [],
-		"name": "paused",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "PUBLIC_MINT_PRICE",
 		"outputs": [
 			{
@@ -753,49 +615,6 @@ const CONTRACT_ABI = [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			}
-		],
-		"name": "tokenByIndex",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			}
-		],
-		"name": "tokenOfOwnerByIndex",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -887,7 +706,7 @@ const web3: Web3 = {
 };
 const getContract = (signer: Signer) => {
   return new ethers.Contract(
-    "0x0fE6F30F8d81bDD53562F689690129F17c2E963A",
+    "0xBb6f5dA9090Ac1F90b608Aee30E3FA28e1bdf221",
     CONTRACT_ABI,
     signer,
   );

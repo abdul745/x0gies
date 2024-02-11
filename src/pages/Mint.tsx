@@ -4,7 +4,6 @@ import { Button, Social, Image, Text } from "components";
 import { Layout } from "../layouts";
 import { getContract } from "../utils";
 import { useAddress, useSigner, useConnect, metamaskWallet } from "@thirdweb-dev/react";
-import { ethers, utils } from "ethers";
 import toast from "react-hot-toast";
 
 export const Mint: React.FC = () => {
@@ -22,94 +21,91 @@ export const Mint: React.FC = () => {
     setNoOfMints(e.target.value);
   };
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     const _total = await contract.totalSupply();
 
-  //     setTotalSupply(Number(_total));
-  //   }
 
-  //   if (address) getData();
-
-  //   return () => { };
-  // }, [signer, address]);
-
-  async function mint() {
+  async function publicMint() {
     try {
       const wallet = await connect(metamaskConfig);
       console.log('connected to ', wallet)
 
 
       console.log(address)
-      const mintCount = await contract.whitelistMints(address);
-      console.log(mintCount.toNumber())
-      const claimedCount = await contract.claimedWhitelistTokens(address);
-      const remainingClaimedCount = mintCount - claimedCount
-      const remainingCount = remainingClaimedCount - noOfMints;
-      if (remainingCount) {
-        if (remainingCount >= 0) {
-          try {
-            const trx = await contract.mint(noOfMints.toString(), {
-              gasLimit: 10000000,
-            });
-            console.log(trx);
-            const transactionReceipt = await trx.wait();
-
-            if (transactionReceipt.status === 1) {
-              toast.success("you have minted 1 x0gies for 0.04 eth");
-              console.log("Mint successful!");
-              console.log("Minted token ID:", transactionReceipt);
-            } else {
-              console.error("Mint failed:", transactionReceipt.status);
-            }
-          } catch (error) {
-            alert("Please check your input")
-            console.log("error", error.message);
-          }
+      // const mintCount = await contract.whitelistMints(address);
+      // console.log(mintCount.toNumber())
+      // const claimedCount = await contract.claimedWhitelistTokens(address);
+      const mintPrice = await contract.PUBLIC_MINT_PRICE;
+      
+      
+      // const remainingClaimedCount = mintCount - claimedCount
+      // const remainingCount = remainingClaimedCount - noOfMints;
+      try {
+        const nftCost = (0.004 * (10 ** 18))
+        const finalPrice= nftCost * Number(noOfMints)
+        const trx = await contract.publicMinting(noOfMints.toString(), {
+          // gasLimit: 10000000,
+          value: finalPrice.toString() ,
+        });
+        console.log(trx);
+        const transactionReceipt = await trx.wait();
+        const finalWeiPrice = finalPrice / 1e18
+        if (transactionReceipt.status === 1) {
+          toast.success(`You have Minted ${noOfMints} X0gies for ${finalWeiPrice} ETH`);
+          console.log("Mint successful!");
+          console.log("Minted token ID:", transactionReceipt);
         } else {
-          try {
-            const nftCost = (0.004 * (10 ** 18)) * Math.abs(remainingCount)
-            const trx = await contract.mint(noOfMints.toString(), {
-              value: nftCost.toString(),
-              gasLimit: 10000000,
-            });
-            console.log(trx);
-            const transactionReceipt = await trx.wait();
-
-            if (transactionReceipt.status === 1) {
-              toast.success("you have minted 1 x0gies for 0.04 eth");
-              console.log("Mint successful!");
-              console.log("Minted token ID:", transactionReceipt);
-            } else {
-              console.error("Mint failed:", transactionReceipt.status);
-            }
-          } catch (error) {
-            alert("Please check your input")
-            console.log("error", error.message);
-          }
+          console.error("Mint failed:", transactionReceipt.status);
         }
-      } else {
-        try {
-          const nftCost = (0.004 * (10 ** 18)) * Math.abs(noOfMints)
-          const trx = await contract.mint(noOfMints.toString(), {
-            value: nftCost.toString(),
-            gasLimit: 10000000,
-          });
-          console.log(trx);
-          const transactionReceipt = await trx.wait();
-
-          if (transactionReceipt.status === 1) {
-            toast.success("you have minted 1 x0gies for 0.04 eth");
-            console.log("Mint successful!");
-            console.log("Minted token ID:", transactionReceipt);
-          } else {
-            console.error("Mint failed:", transactionReceipt.status);
-          }
-        } catch (error) {
-          alert("Please check your input")
-          console.log("error", error.message);
-        }
+      } catch (error) {
+        alert("Please check your input")
+        console.log("error", error.message);
       }
+      // if (remainingCount) {
+      //   if (remainingCount >= 0) {
+         
+      //   } else {
+      //     try {
+      //       const nftCost = (0.004 * (10 ** 18)) * Math.abs(remainingCount)
+      //       const trx = await contract.mint(noOfMints.toString(), {
+      //         value: nftCost.toString(),
+      //         gasLimit: 10000000,
+      //       });
+      //       console.log(trx);
+      //       const transactionReceipt = await trx.wait();
+
+      //       if (transactionReceipt.status === 1) {
+      //         toast.success("you have minted 1 x0gies for 0.04 eth");
+      //         console.log("Mint successful!");
+      //         console.log("Minted token ID:", transactionReceipt);
+      //       } else {
+      //         console.error("Mint failed:", transactionReceipt.status);
+      //       }
+      //     } catch (error) {
+      //       alert("Please check your input")
+      //       console.log("error", error.message);
+      //     }
+      //   }
+      // } else {
+      //   try {
+      //     const nftCost = (0.004 * (10 ** 18)) * Math.abs(noOfMints)
+      //     const trx = await contract.mint(noOfMints.toString(), {
+      //       value: nftCost.toString(),
+      //       gasLimit: 10000000,
+      //     });
+      //     console.log(trx);
+      //     const transactionReceipt = await trx.wait();
+
+      //     if (transactionReceipt.status === 1) {
+      //       toast.success("you have minted 1 x0gies for 0.04 eth");
+      //       console.log("Mint successful!");
+      //       console.log("Minted token ID:", transactionReceipt);
+      //     } else {
+      //       console.error("Mint failed:", transactionReceipt.status);
+      //     }
+      //   } catch (error) {
+      //     alert("Please check your input")
+      //     console.log("error", error.message);
+      //   }
+      // }
     } catch (e) {
       console.log(e)
     }
@@ -259,7 +255,7 @@ export const Mint: React.FC = () => {
             <input value={noOfMints} onChange={handleSetNoOfMints} className="h-[50px] grayscale-[1]  w-[230px]" placeholder='No of Mints' />
             <button
               onClick={() => {
-                mint().then(() => { });
+                publicMint().then(() => { });
               }}
             >
               <Image

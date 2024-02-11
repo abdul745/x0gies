@@ -41,7 +41,7 @@ export const Whitelist: React.FC = () => {
           />
           <Social className="bg-gradient  flex sm:flex-col flex-row gap-[38px] h-[59px] md:h-auto items-center justify-center mt-[124px] sm:px-5 px-6 rounded-[16px] shadow-bs1 w-auto sm:w-full" />
         </div>
-        <WhiteListCard className="bg-cover bg-gradient1  bg-no-repeat flex md:flex-1 flex-col h-[740px] items-end justify-start md:mt-0 mt-[11px] p-6 sm:px-5 shadow-bs2 w-[29%]  md:w-full" />
+        <WhiteListCard className="bg-cover bg-gradient1  bg-no-repeat flex md:flex-1 flex-col h-[fit-content] items-end justify-start md:mt-0 mt-[11px] p-6 sm:px-5 shadow-bs2 w-[388px]  md:w-full" />
       </div>
     </Layout>
   );

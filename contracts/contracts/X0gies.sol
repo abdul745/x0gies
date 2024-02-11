@@ -11,11 +11,27 @@ contract X0giesA is ERC721A, Ownable {
         MAX_SUPPLY = 4444;
         MAX_MINT_PER_TX = 10;
         PUBLIC_MINT_PRICE = 0.004 ether;
+        PAUSED = true;
     }
 
     uint256 public MAX_SUPPLY;
     uint256 public MAX_MINT_PER_TX;
     uint256 public PUBLIC_MINT_PRICE;
+    uint256 public TOTAL_NFTS_MINTED;
+
+    bool public PAUSED;
+    modifier isNotPaused() {
+        require(!PAUSED, "Contract is Paused");
+        _;
+    }
+
+    function pause() external onlyOwner {
+        PAUSED = true;
+    }
+
+    function unpause() external onlyOwner {
+        PAUSED = false;
+    }
 
     string private _baseTokenURI;
 
@@ -25,7 +41,10 @@ contract X0giesA is ERC721A, Ownable {
     //How many NFTs are claimed/transferred by an Address
     mapping(address => uint256) public claimedWhitelistTokens;
 
-    function publicMinting(uint256 _noOfMints) external payable {
+    //How many NFTs a user has burnt
+    mapping(address => uint256) public burntNFTs;
+
+    function publicMinting(uint256 _noOfMints) external payable isNotPaused {
         require(
             msg.value == PUBLIC_MINT_PRICE * _noOfMints,
             "Insufficient ETH sent"
@@ -34,22 +53,30 @@ contract X0giesA is ERC721A, Ownable {
             _noOfMints <= MAX_MINT_PER_TX,
             "Exceeds maximum mint per transaction"
         );
+
         _mint(_msgSender(), _noOfMints);
+        TOTAL_NFTS_MINTED += _noOfMints;
     }
 
-    function whitelistedMinting(uint256 _noOfMints) external payable {
+    function whitelistedMinting(uint256 _noOfMints)
+        external
+        payable
+        isNotPaused
+    {
         require(whitelistMints[_msgSender()] > 0, "Not whitelisted");
         require(
             claimedWhitelistTokens[_msgSender()] + _noOfMints <=
                 whitelistMints[_msgSender()],
             "Exceeds whitelisted mint limit"
         );
-         require(
+        require(
             _noOfMints <= MAX_MINT_PER_TX,
             "Exceeds maximum mint per transaction"
         );
         claimedWhitelistTokens[_msgSender()] += _noOfMints;
-         _mint(_msgSender(), _noOfMints);
+
+        _mint(_msgSender(), _noOfMints);
+        TOTAL_NFTS_MINTED += _noOfMints;
     }
 
     function setMaxSupply(uint256 _maxSupply) external onlyOwner {
@@ -73,6 +100,21 @@ contract X0giesA is ERC721A, Ownable {
         for (uint256 i = 0; i < _addresses.length; i++) {
             whitelistMints[_addresses[i]] = _noOfMints[i];
         }
+    }
+
+    function withdrawEth() external payable onlyOwner {
+        address payable ownerPayable = payable(owner());
+        ownerPayable.transfer(address(this).balance);
+    }
+
+    function burn(uint256 tokenId) external {
+        // require(
+        //     isApprovedOrOwner(_msgSender(), tokenId),
+        //     "Not approved or owner"
+        // );
+
+        _burn(tokenId);
+        burntNFTs[_msgSender()]++;
     }
 
     function setBaseURI(string calldata baseURI) external onlyOwner {
