@@ -58,7 +58,7 @@ export const Mint: React.FC = () => {
       console.log(address)
       const isPaused = await contract.PAUSED();
       (!isPaused)
-      ? (async () => {
+        ? (async () => {
           try {
             const nftCost = (0.004 * (10 ** 18))
             const finalPrice = nftCost * Number(noOfMints)
@@ -69,8 +69,11 @@ export const Mint: React.FC = () => {
             const finalWeiPrice = finalPrice / 1e18
             if (transactionReceipt.status === 1) {
               toast.success(`You have Minted ${noOfMints} X0gies for ${finalWeiPrice} ETH`);
+              const _total = await contract.totalSupply();
+              setTotalNftsMinted(Number(_total));
               console.log("Mint successful!");
               console.log("Minted token ID:", transactionReceipt);
+
             } else {
               console.error("Mint failed:", transactionReceipt.status);
             }
@@ -79,7 +82,7 @@ export const Mint: React.FC = () => {
             console.log("error", error.message);
           }
         })()
-      : alert("Contract is Paused");
+        : alert("Contract is Paused");
     } catch (e) {
       console.log(e)
     }

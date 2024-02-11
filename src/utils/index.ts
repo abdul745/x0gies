@@ -822,7 +822,7 @@ const web3: Web3 = {
 };
 const getContract = (signer: Signer) => {
   return new ethers.Contract(
-    "0x2faD67AaE3b064e6591BFF341Ff3B3CD68Ce5159",
+    "0xB5CD3B3AdFB49221F60c617eC038749EfF67ffeC",
     CONTRACT_ABI,
     signer,
   );

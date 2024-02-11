@@ -73,7 +73,11 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
     console.log(allowedFreeMints.toNumber());
     const claimedTokens = await contract.claimedWhitelistTokens(address);
     const remainingAllowedTokens = allowedFreeMints - claimedTokens;
-    if (remainingAllowedTokens >= Number(noOfMints) ) {
+    const isPaused = await contract.PAUSED();
+    (!isPaused)
+    ? (async () => {
+      if (remainingAllowedTokens >= Number(noOfMints) ) {
+     
       try {
         const trx = await contract.whitelistedMinting(noOfMints, {
           gasLimit: 2000000,
@@ -82,14 +86,17 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
         console.log("receipt", receipt);
         if (receipt.status === 1) {
           toast.success(`You Have Minted ${noOfMints} X0GIES`);
+          const _total = await contract.totalSupply();
+          setTotalNftsMinted(Number(_total));
         }
         setPossibleWLMint(remainingAllowedTokens-Number(noOfMints))
       } catch (error) {
         console.log("error", error);
-      }
+      } 
     } else {
       alert("Not Enough NFTs Allowed to Mint!");
-    }
+    } })()
+    : alert("Contract is Paused");
   }
 
   return (
