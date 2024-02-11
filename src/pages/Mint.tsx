@@ -4,108 +4,82 @@ import { Button, Social, Image, Text } from "components";
 import { Layout } from "../layouts";
 import { getContract } from "../utils";
 import { useAddress, useSigner, useConnect, metamaskWallet } from "@thirdweb-dev/react";
+import { useSwitchChain } from "@thirdweb-dev/react";
+import { Mumbai } from "@thirdweb-dev/chains";
 import toast from "react-hot-toast";
+import { ethers } from "ethers";
 
 export const Mint: React.FC = () => {
   const address = useAddress();
   const signer = useSigner();
   const contract = getContract(signer);
-  const [MAX, setMax] = useState(1000);
-  const [totalSupply, setTotalSupply] = useState(0);
+  const [MAX, setMax] = useState(2435);
+  const [totalNftsMinted, setTotalNftsMinted] = useState(0);
   const [noOfMints, setNoOfMints] = useState('');
+  const [priceInEther, setPriceInEther] = useState('');
+
   const connect = useConnect();
   const metamaskConfig = metamaskWallet();
-
+  const switchChain = useSwitchChain();
 
   const handleSetNoOfMints = (e) => {
     setNoOfMints(e.target.value);
   };
 
+  useEffect(() => {
+    async function getData() {
+      const _total = await contract.totalSupply();
+      setTotalNftsMinted(Number(_total));
+    }
+
+    if (address) getData();
+
+    return () => { };
+  }, [signer, address]);
+
+  useEffect(() => {
+    async function fetchPrice() {
+      const mintPrice = await contract.PUBLIC_MINT_PRICE();
+      const priceInString = mintPrice.toString();
+      const priceInEther = ethers.utils.formatEther(priceInString);
+      setPriceInEther(priceInEther);
+    }
+
+    fetchPrice();
+  }, [contract]);
 
 
   async function publicMint() {
     try {
       const wallet = await connect(metamaskConfig);
       console.log('connected to ', wallet)
-
+      await switchChain(Mumbai.chainId)
 
       console.log(address)
-      // const mintCount = await contract.whitelistMints(address);
-      // console.log(mintCount.toNumber())
-      // const claimedCount = await contract.claimedWhitelistTokens(address);
-      const mintPrice = await contract.PUBLIC_MINT_PRICE;
-      
-      
-      // const remainingClaimedCount = mintCount - claimedCount
-      // const remainingCount = remainingClaimedCount - noOfMints;
-      try {
-        const nftCost = (0.004 * (10 ** 18))
-        const finalPrice= nftCost * Number(noOfMints)
-        const trx = await contract.publicMinting(noOfMints.toString(), {
-          // gasLimit: 10000000,
-          value: finalPrice.toString() ,
-        });
-        console.log(trx);
-        const transactionReceipt = await trx.wait();
-        const finalWeiPrice = finalPrice / 1e18
-        if (transactionReceipt.status === 1) {
-          toast.success(`You have Minted ${noOfMints} X0gies for ${finalWeiPrice} ETH`);
-          console.log("Mint successful!");
-          console.log("Minted token ID:", transactionReceipt);
-        } else {
-          console.error("Mint failed:", transactionReceipt.status);
-        }
-      } catch (error) {
-        alert("Please check your input")
-        console.log("error", error.message);
-      }
-      // if (remainingCount) {
-      //   if (remainingCount >= 0) {
-         
-      //   } else {
-      //     try {
-      //       const nftCost = (0.004 * (10 ** 18)) * Math.abs(remainingCount)
-      //       const trx = await contract.mint(noOfMints.toString(), {
-      //         value: nftCost.toString(),
-      //         gasLimit: 10000000,
-      //       });
-      //       console.log(trx);
-      //       const transactionReceipt = await trx.wait();
-
-      //       if (transactionReceipt.status === 1) {
-      //         toast.success("you have minted 1 x0gies for 0.04 eth");
-      //         console.log("Mint successful!");
-      //         console.log("Minted token ID:", transactionReceipt);
-      //       } else {
-      //         console.error("Mint failed:", transactionReceipt.status);
-      //       }
-      //     } catch (error) {
-      //       alert("Please check your input")
-      //       console.log("error", error.message);
-      //     }
-      //   }
-      // } else {
-      //   try {
-      //     const nftCost = (0.004 * (10 ** 18)) * Math.abs(noOfMints)
-      //     const trx = await contract.mint(noOfMints.toString(), {
-      //       value: nftCost.toString(),
-      //       gasLimit: 10000000,
-      //     });
-      //     console.log(trx);
-      //     const transactionReceipt = await trx.wait();
-
-      //     if (transactionReceipt.status === 1) {
-      //       toast.success("you have minted 1 x0gies for 0.04 eth");
-      //       console.log("Mint successful!");
-      //       console.log("Minted token ID:", transactionReceipt);
-      //     } else {
-      //       console.error("Mint failed:", transactionReceipt.status);
-      //     }
-      //   } catch (error) {
-      //     alert("Please check your input")
-      //     console.log("error", error.message);
-      //   }
-      // }
+      const isPaused = await contract.PAUSED();
+      (!isPaused)
+      ? (async () => {
+          try {
+            const nftCost = (0.004 * (10 ** 18))
+            const finalPrice = nftCost * Number(noOfMints)
+            const trx = await contract.publicMinting(noOfMints.toString(), {
+              value: finalPrice.toString(),
+            });
+            const transactionReceipt = await trx.wait();
+            const finalWeiPrice = finalPrice / 1e18
+            if (transactionReceipt.status === 1) {
+              toast.success(`You have Minted ${noOfMints} X0gies for ${finalWeiPrice} ETH`);
+              console.log("Mint successful!");
+              console.log("Minted token ID:", transactionReceipt);
+            } else {
+              console.error("Mint failed:", transactionReceipt.status);
+            }
+          } catch (error) {
+            alert("Please check your input")
+            console.log("error", error.message);
+          }
+        })()
+      : alert("Contract is Paused");
     } catch (e) {
       console.log(e)
     }
@@ -118,7 +92,9 @@ export const Mint: React.FC = () => {
           <div className="flex flex-col gap-[38px] items-start justify-start w-auto md:w-full">
             <div className="flex flex-col gap-[43px] items-start justify-start w-auto md:w-full">
               <Text
-                className="sm:text-3xl md:text-[32px] text-[34px] text-center text-shadow-ts2 text-white-A700 w-auto"
+                className="sm:text-3xl md:tconst mintPrice = await contract.PUBLIC_MINT_PRICE();
+      const priceInString = mintPrice.toString();
+      const priceInEther = ethers.utils.formatEther(priceInString)ext-[32px] text-[34px] text-center text-shadow-ts2 text-white-A700 w-auto"
                 size="txtKemcoPixelBold34"
               >
                 The BEST PIXEL ART ON ETHEREUM 🔥
@@ -171,13 +147,13 @@ export const Mint: React.FC = () => {
                   className="text-base text-center text-white-A700 w-[130px]"
                   size="txtKemcoPixelBold18"
                 >
-                  MAX SUPPLY
+                  PUBLIC SUPPLY
                 </Text>
                 <Text
                   className="text-base text-center text-white-A700 w-[106px]"
                   size="txtKemcoPixelBold18"
                 >
-                  {totalSupply}/{MAX}
+                  {totalNftsMinted}/{MAX}
                 </Text>
               </div>
               <div className="flex flex-col gap-3 items-end justify-start w-auto sm:w-full">
@@ -198,57 +174,10 @@ export const Mint: React.FC = () => {
                       className="text-base text-center text-white-A700 w-[106px]"
                       size="txtKemcoPixelBold18"
                     >
-                      0.04 ETH
+                      {priceInEther}
                     </Text>
                   </div>
-                  {/* <div className="border-b-2 border-solid border-white-A700 flex flex-row items-start justify-between pb-3 w-full">
-                    <Text
-                      className="text-base text-center text-white-A700 w-[78px]"
-                      size="txtKemcoPixelBold18"
-                    >
-                      Amount
-                    </Text>
-                    <div className="flex flex-row gap-[13px] items-center justify-start w-auto">
-                      <Image
-                        className="h-[30px] w-[30px]"
-                        src="images/img_thumbsup.svg"
-                        alt="thumbsup"
-                      />
-                      <Text
-                        className="text-base text-center text-white-A700 w-[11px]"
-                        size="txtKemcoPixelBold18"
-                      >
-                        1
-                      </Text>
-                      <Image
-                        className="h-[30px] w-[30px]"
-                        src="images/plus.png"
-                        alt="thumbsup_One"
-                      />
-                    </div>
-                    <div className="flex flex-col h-7 md:h-auto items-center justify-center p-2.5 w-auto">
-                      <Text
-                        className="text-base text-center text-light_blue-A200 w-10"
-                        size="txtKemcoPixelBold18"
-                      >
-                        max
-                      </Text>
-                    </div>
-                  </div> */}
-                  {/* <div className="border-b-2 border-solid border-white-A700 flex flex-row items-start justify-between pb-3 w-full">
-                    <Text
-                      className="text-base text-center text-white-A700 w-[65px]"
-                      size="txtKemcoPixelBold18"
-                    >
-                      PRICE
-                    </Text>
-                    <Text
-                      className="text-base text-center text-white-A700 w-[106px]"
-                      size="txtKemcoPixelBold18"
-                    >
-                      0.04 ETH
-                    </Text>
-                  </div> */}
+
                 </div>
               </div>
             </div>
