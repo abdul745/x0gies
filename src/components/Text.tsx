@@ -3,15 +3,15 @@ import React from "react";
 const sizeClasses = {
   txtMobileFont66: "font-mobilefont font-normal",
   txtJoystixMonospaceRegular30: "font-joystix font-normal",
-  txtKemcoPixelBold34: "font-bold font-kemcopixel",
+  txtKemcoPixelBold34: "font-bold font-dungeon",
   txtMSSansSerif30: "font-mssansserif font-normal",
   txtJoystixMonospaceRegular20: "font-joystix font-normal",
   txtUnkemptRegular30: "font-normal font-unkempt",
   txtJoystixMonospaceRegular16LightblueA200: "font-joystix font-normal",
   txtJoystixMonospaceRegular16: "font-joystix font-normal",
   txtBackto198212: "font-backto font-normal",
-  txtKemcoPixelBold18Deeppurple900: "font-bold font-kemcopixel",
-  txtKemcoPixelBold18: "font-bold font-kemcopixel",
+  txtKemcoPixelBold18Deeppurple900: "font-bold font-dungeon",
+  txtKemcoPixelBold18: "font-bold font-dungeon",
 } as const;
 
 export type TextProps = Partial<{

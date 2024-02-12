@@ -5,12 +5,12 @@
     import "@openzeppelin/contracts/access/Ownable.sol";
 
 
-    contract X0giesA is ERC721A , Ownable {
+    contract X0giesA is ERC721A , Ownable(msg.sender) {
         // uint256 private _nextTokenId();
         uint256 public PUBLIC_SUPPLY;
         uint256 public MAX_MINT_PER_TX;
         uint256 public PUBLIC_MINT_PRICE;
-        uint256 public TOTAL_NFTS_MINTED;
+        uint256 public TOTAL_PUBLIC_MINTS;
 
         bool public PAUSED;
         constructor() ERC721A("X0giesA", "X0G") {
@@ -58,9 +58,10 @@
                 _noOfMints <= MAX_MINT_PER_TX,
                 "Exceeds maximum mint per transaction"
             );
+            require(TOTAL_PUBLIC_MINTS <= PUBLIC_SUPPLY , "You cannot mint more than the Public Supply");
 
             _mint(_msgSender(), _noOfMints);
-            TOTAL_NFTS_MINTED += _noOfMints;
+            TOTAL_PUBLIC_MINTS += _noOfMints;
         }
 
         function whitelistedMinting(uint256 _noOfMints)
@@ -74,14 +75,14 @@
                     whitelistMints[_msgSender()],
                 "Exceeds whitelisted mint limit"
             );
-            require(
-                _noOfMints <= MAX_MINT_PER_TX,
-                "Exceeds maximum mint per transaction"
-            );
+            // require(
+            //     _noOfMints <= MAX_MINT_PER_TX,
+            //     "Exceeds maximum mint per transaction"
+            // );
             claimedWhitelistTokens[_msgSender()] += _noOfMints;
 
             _mint(_msgSender(), _noOfMints);
-            TOTAL_NFTS_MINTED += _noOfMints;
+            // TOTAL_PUBLIC_MINTS += _noOfMints;
         }
 
         function setMaxSupply(uint256 _maxSupply) external onlyOwner {
@@ -113,6 +114,10 @@
         }
 
         function burn(uint256 tokenId) external isNotPaused{
+            // require(
+            //     isApprovedOrOwner(_msgSender(), tokenId),
+            //     "Not approved or owner"
+            // );
         require(ownerOf(tokenId) ==  msg.sender , "You're not the owner");
             _burn(tokenId);
             burntNFTs[_msgSender()]++;
