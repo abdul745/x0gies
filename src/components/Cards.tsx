@@ -82,11 +82,11 @@ export const Cards = ({
       {property1 === 'wl-card' && (
         <>
           <div className="flex w-[229px] h-[41px] items-center justify-center gap-[10px] p-[10px] absolute top-[20px] left-[120px] bg-white rounded-[6px]">
-            <div className="relative w-fit mt-[-14.50px] mb-[-12.50px] text-black text-[20px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="relative w-fit mt-[-14.50px] mb-[-12.50px] text-black text-[20px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-center tracking-[0] leading-[48px] whitespace-nowrap">
               Mint X0GIES
             </div>
           </div>
-          <div className="absolute h-[48px] top-[515px] left-[102px] text-white text-[20px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-center tracking-[0] leading-[48px] whitespace-nowrap">
+          <div className="absolute h-[48px] top-[515px] left-[102px] text-white text-[20px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-center tracking-[0] leading-[48px] whitespace-nowrap">
             Possible WL mints
           </div>
         </>
@@ -113,10 +113,10 @@ export const Cards = ({
                 src="/img/line-4.svg"
               />
               <div className="inline-flex items-start gap-[72px] absolute top-0 left-[21px]">
-                <div className="relative w-[137px] h-[26px] mt-[-1.00px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+                <div className="relative w-[137px] h-[26px] mt-[-1.00px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
                   MAX SUPPLY
                 </div>
-                <div className="relative w-[137px] h-[26px] mt-[-1.00px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+                <div className="relative w-[137px] h-[26px] mt-[-1.00px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
                   0/333333
                 </div>
               </div>
@@ -125,7 +125,7 @@ export const Cards = ({
 
           {property1 === 'wl-card' && (
             <>
-              <div className="absolute w-[17px] h-[33px] top-0 left-[192px] text-white text-[30px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-center tracking-[0] leading-[48px] whitespace-nowrap">
+              <div className="absolute w-[17px] h-[33px] top-0 left-[192px] text-white text-[30px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-center tracking-[0] leading-[48px] whitespace-nowrap">
                 5
               </div>
               <div className="absolute w-[376px] h-[26px] top-[18px] left-0" />
@@ -145,7 +145,7 @@ export const Cards = ({
       {property1 === 'mint-card' && (
         <>
           <div className="flex w-[229px] h-[41px] items-center justify-center gap-[10px] p-[10px] absolute top-[20px] left-[120px] bg-white rounded-[6px]">
-            <div className="relative w-fit mt-[-14.50px] mb-[-12.50px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-black text-[20px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="relative w-fit mt-[-14.50px] mb-[-12.50px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-black text-[20px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
               Mint X0GIES
             </div>
           </div>
@@ -170,23 +170,23 @@ export const Cards = ({
             src="/img/line-4.svg"
           />
           <div className="inline-flex items-start gap-[173px] absolute top-[499px] left-[42px]">
-            <div className="w-[66px] relative h-[26px] mt-[-1.00px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="w-[66px] relative h-[26px] mt-[-1.00px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
               PRICE
             </div>
-            <div className="w-[120px] relative h-[26px] mt-[-1.00px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="w-[120px] relative h-[26px] mt-[-1.00px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
               0.04 ETH
             </div>
           </div>
           <div className="inline-flex items-start gap-[173px] absolute top-[603px] left-[43px]">
-            <div className="w-[76px] relative h-[26px] mt-[-1.00px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="w-[76px] relative h-[26px] mt-[-1.00px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
               PRICE
             </div>
-            <div className="w-[127px] relative h-[26px] mt-[-1.00px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="w-[127px] relative h-[26px] mt-[-1.00px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
               0.04 ETH
             </div>
           </div>
           <div className="inline-flex items-center gap-[87px] absolute top-[547px] left-[42px]">
-            <div className="relative w-[80px] h-[26px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+            <div className="relative w-[80px] h-[26px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
               Amount
             </div>
             <div className="inline-flex items-end gap-[54px] relative flex-[0_0_auto]">
@@ -196,7 +196,7 @@ export const Cards = ({
                   variant="default"
                   propertyDefault={counterPropertyDefault}
                 />
-                <div className="relative w-[14px] h-[25px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+                <div className="relative w-[14px] h-[25px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-white text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
                   1
                 </div>
                 <Counter
@@ -206,7 +206,7 @@ export const Cards = ({
                 />
               </div>
               <div className="inline-flex h-[28px] items-center justify-center gap-[10px] p-[10px] relative flex-[0_0_auto]">
-                <div className="relative w-[40px] h-[23px] mt-[-8.50px] mb-[-6.50px] [font-family:'Joystix-Monospace',Helvetica] font-normal text-[#37dbff] text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
+                <div className="relative w-[40px] h-[23px] mt-[-8.50px] mb-[-6.50px] [font-family:HISKYFLIPPERHIBOLD', sans-serif;] font-normal text-[#37dbff] text-[16px] text-center tracking-[0] leading-[48px] whitespace-nowrap">
                   max
                 </div>
               </div>
