@@ -94,7 +94,7 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
       <div className={props.className}>
         <div className="flex flex-col gap-2.5 items-center justify-start mb-[11px] mr-3 w-[95%] md:w-full">
           <Text
-            className="font-dungeon text-center text-xl w-[229px]"
+            className="font-HISKYFLIPPERHIBOLD text-center text-xl w-[229px]"
             style={{ color: 'white' }}
           >
             WL Mint X0GIES
@@ -131,7 +131,7 @@ export const WhiteListCard: React.FC<WhiteListCardProps> = (props) => {
             boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)'
           }} />
           <Button
-            className="font-dungeon cursor-pointer h-[50px] text-center text-xl w-[230px] grayscale-[1]"
+            className="font-HISKYFLIPPERHIBOLD cursor-pointer h-[50px] text-center text-xl w-[230px] grayscale-[1]"
 
             shape="round"
             color="white_A700"

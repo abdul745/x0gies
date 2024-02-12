@@ -2,7 +2,7 @@ import { Nav, Text } from 'components';
 
 export function Layout(props) {
   return (
-    <div className="bg-gradient2  flex flex-col font-dungeon items-center justify-start mx-auto pb-[22px] w-full" style = {{
+    <div className="bg-gradient2  flex flex-col font-HISKYFLIPPERHIBOLD items-center justify-start mx-auto pb-[22px] w-full" style = {{
       height: '100vh'
   }}>
       <Nav />
