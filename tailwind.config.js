@@ -36,14 +36,14 @@ export default {
         bs1: '0px 4px  24px -1px #00000033',
         bs2: 'inset -8px -8px  1px 0px #00000033',
       },
-      fontFamily: {
-        mobilefont: 'Mobile Font',
-        joystix: 'Joystix',
-        kemcopixel: 'Kemco Pixel',
-        mssansserif: 'MS Sans Serif',
-        unkempt: 'Unkempt',
-        backto: 'Back to 1982',
-      },
+      // fontFamily: {
+      //   mobilefont: 'Mobile Font',
+      //   joystix: 'Joystix',
+      //   kemcopixel: 'Kemco Pixel',
+      //   mssansserif: 'MS Sans Serif',
+      //   unkempt: 'Unkempt',
+      //   backto: 'Back to 1982',
+      // },
       backgroundImage: {
         gradient: 'linear-gradient(138deg ,#ffffff66,#ffffff19)',
         gradient1: 'linear-gradient(45deg ,#444444,#36363612)',

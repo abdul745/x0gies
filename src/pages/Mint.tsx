@@ -149,10 +149,10 @@ export const Mint: React.FC = () => {
             >
               Mint X0GIES
             </Text>
-            <div className="flex flex-col items-center justify-start w-auto sm:w-full">
-              <div className="flex flex-row gap-[72px] items-start justify-start w-auto">
+            <div className="flex flex-col font-dungeon items-center justify-start w-auto sm:w-full">
+              <div className="flex flex-row gap-[72px] font-dungeon items-start justify-start w-auto">
                 <Text
-                  className="text-base text-center text-white-A700 w-[130px]"
+                  className="text-base text-center font-dungeon text-white-A700 w-[130px]"
                   size="txtKemcoPixelBold18"
                 >
                   PUBLIC SUPPLY
