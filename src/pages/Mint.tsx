@@ -98,7 +98,7 @@ export const Mint: React.FC = () => {
 
   return (
     <Layout>
-      <div className="flex md:flex-col flex-row font-dungeon  items-center justify-between   w-full">
+      <div className="flex md:flex-col flex-row font-HISKYFLIPPERHIBOLD  items-center justify-between   w-full">
         <div className="flex md:flex-1 flex-col md:gap-10 gap-[181px] items-start justify-start w-auto md:w-full">
           <div className="flex flex-col gap-[38px] items-start justify-start w-auto md:w-full">
             <div className="flex flex-col gap-[43px] items-start justify-start w-auto md:w-full">
@@ -110,7 +110,7 @@ export const Mint: React.FC = () => {
               >
                 The BEST PIXEL ART ON ETHEREUM 🔥
               </Text>
-              <Text className="font-bold font-dungeon leading-[30.00px] text-sm sm:text-[26px] md:text-[28px] text-shadow-ts3 text-white-A700_bc">
+              <Text className="font-bold font-HISKYFLIPPERHIBOLD leading-[30.00px] text-sm sm:text-[26px] md:text-[28px] text-shadow-ts3 text-white-A700_bc">
                 <>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry.
@@ -124,7 +124,7 @@ export const Mint: React.FC = () => {
 
             <div className="flex  items-center gap-2 justify-end mb-1.5 mr-3 ">
               <Button
-                className="font-dungeon cursor-pointer h-[50px] text-center md:ml-[0] ml-[5px] mt-[95px] text-xl w-[230px]"
+                className="font-HISKYFLIPPERHIBOLD cursor-pointer h-[50px] text-center md:ml-[0] ml-[5px] mt-[95px] text-xl w-[230px]"
 
                 shape="round"
                 color="white_A700"
@@ -144,15 +144,15 @@ export const Mint: React.FC = () => {
         <div className="bg-cover bg-gradient1  bg-no-repeat flex sm:flex-1 flex-col font-joystix h-[729px] items-center justify-start py-6 shadow-bs2 w-[509px] sm:w-full">
           <div className="flex flex-col gap-2.5 items-center justify-start w-[77%] md:w-full">
             <Text
-              className="font-dungeon text-center text-xl w-[229px]"
+              className="font-HISKYFLIPPERHIBOLD text-center text-xl w-[229px]"
               style={{ color: 'white' }}
             >
               Mint X0GIES
             </Text>
-            <div className="flex flex-col font-dungeon items-center justify-start w-auto sm:w-full">
-              <div className="flex flex-row gap-[72px] font-dungeon items-start justify-start w-auto">
+            <div className="flex flex-col font-HISKYFLIPPERHIBOLD items-center justify-start w-auto sm:w-full">
+              <div className="flex flex-row gap-[72px] font-HISKYFLIPPERHIBOLD items-start justify-start w-auto">
                 <Text
-                  className="text-base text-center font-dungeon text-white-A700 w-[130px]"
+                  className="text-base text-center font-HISKYFLIPPERHIBOLD text-white-A700 w-[130px]"
                   size="txtKemcoPixelBold18"
                 >
                   PUBLIC SUPPLY
@@ -202,7 +202,7 @@ export const Mint: React.FC = () => {
               }}
             > */}
             <Button
-              className="font-dungeon cursor-pointer h-[50px] text-center text-xl w-[230px] grayscale-[1]"
+              className="font-HISKYFLIPPERHIBOLD cursor-pointer h-[50px] text-center text-xl w-[230px] grayscale-[1]"
               shape="round"
               color="white_A700"
               size="xs"

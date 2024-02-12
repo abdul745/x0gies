@@ -103,7 +103,7 @@ export const Burn: React.FC = () => {
         boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)' 
 } } />
           <Button
-            className="font-dungeon cursor-pointer h-[41px] text-center text-xl w-[229px]"
+            className="font-HISKYFLIPPERHIBOLD cursor-pointer h-[41px] text-center text-xl w-[229px]"
             shape="round"
             color="white_A700"
             size="xs"

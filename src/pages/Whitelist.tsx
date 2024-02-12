@@ -12,7 +12,7 @@ export const Whitelist: React.FC = () => {
 
   return (
     <Layout>
-      <div className="flex md:flex-col flex-row font-dungeon  items-center justify-between   w-full">
+      <div className="flex md:flex-col flex-row font-HISKYFLIPPERHIBOLD  items-center justify-between   w-full">
         <div className="flex md:flex-1 flex-col items-start justify-start w-[59%] md:w-full">
           <Text
             className="sm:text-3xl md:text-[32px] text-[34px] text-center text-shadow-ts2 text-white-A700"
@@ -40,7 +40,7 @@ export const Whitelist: React.FC = () => {
             onClick={() => navigate("/")}
           /> */}
           <Button
-                className="font-dungeon cursor-pointer h-[50px] text-center md:ml-[0] ml-[5px] mt-[95px] text-xl w-[230px]"
+                className="font-HISKYFLIPPERHIBOLD cursor-pointer h-[50px] text-center md:ml-[0] ml-[5px] mt-[95px] text-xl w-[230px]"
                 shape="round"
                 color="white_A700"
                 size="xs"
