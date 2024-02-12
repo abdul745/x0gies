@@ -212,7 +212,7 @@ export const Mint: React.FC = () => {
                 publicMint().then(() => { });
               }}
             >
-              WhiteList Mint
+              Public Mint
             </Button>
             {/* <Image
                 className="h-[50px] grayscale-[1]  w-[230px]"
