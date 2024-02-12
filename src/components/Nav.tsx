@@ -77,6 +77,8 @@ export const Nav = () => {
         }}
         modalSize={"compact"}
         className={"bg-transparent"}
+        style={{    color: '#000' , backgroundColor: 'white'
+        }}
       />
     </header>
   );
