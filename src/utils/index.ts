@@ -742,7 +742,7 @@ const CONTRACT_ABI = [
 	},
 	{
 		"inputs": [],
-		"name": "TOTAL_NFTS_MINTED",
+		"name": "TOTAL_PUBLIC_MINTS",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -822,7 +822,7 @@ const web3: Web3 = {
 };
 const getContract = (signer: Signer) => {
   return new ethers.Contract(
-    "0xB5CD3B3AdFB49221F60c617eC038749EfF67ffeC",
+    "0xe1C8004a2B648B8170d601FC5F25fB577158450a",
     CONTRACT_ABI,
     signer,
   );

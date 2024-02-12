@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 import { Button, Social, Image, Text } from "components";
 import { Layout } from "../layouts";
 import { getContract } from "../utils";
@@ -10,26 +11,20 @@ import toast from "react-hot-toast";
 import { ethers } from "ethers";
 
 export const Mint: React.FC = () => {
+  const navigate = useNavigate();
+
   const address = useAddress();
   const signer = useSigner();
   const contract = getContract(signer);
   const [MAX, setMax] = useState(2435);
-  const [totalNftsMinted, setTotalNftsMinted] = useState(0);
+  const [totalPublicNftsMinted, setTotalPublicNftsMinted] = useState(0);
   const [noOfMints, setNoOfMints] = useState('');
-  const [priceInEther, setPriceInEther] = useState('');
-
-  const connect = useConnect();
-  const metamaskConfig = metamaskWallet();
-  const switchChain = useSwitchChain();
-
-  const handleSetNoOfMints = (e) => {
-    setNoOfMints(e.target.value);
-  };
+  const [priceInEther, setPriceInEther] = useState('0.004');
 
   useEffect(() => {
     async function getData() {
-      const _total = await contract.totalSupply();
-      setTotalNftsMinted(Number(_total));
+      const _total = await contract.TOTAL_PUBLIC_MINTS();
+      setTotalPublicNftsMinted(Number(_total));
     }
 
     if (address) getData();
@@ -47,6 +42,19 @@ export const Mint: React.FC = () => {
 
     fetchPrice();
   }, [contract]);
+
+  const connect = useConnect();
+  const metamaskConfig = metamaskWallet();
+  const switchChain = useSwitchChain();
+
+  const handleSetNoOfMints = (e) => {
+    const value = e.target.value;
+    if (value === '' || (Number.isInteger(+value) && +value > 0 && +value <= 10)) {
+      setNoOfMints(value);
+    }
+  };
+
+
 
 
   async function publicMint() {
@@ -70,7 +78,7 @@ export const Mint: React.FC = () => {
             if (transactionReceipt.status === 1) {
               toast.success(`You have Minted ${noOfMints} X0gies for ${finalWeiPrice} ETH`);
               const _total = await contract.totalSupply();
-              setTotalNftsMinted(Number(_total));
+              setTotalPublicNftsMinted(Number(_total));
               console.log("Mint successful!");
               console.log("Minted token ID:", transactionReceipt);
 
@@ -90,7 +98,7 @@ export const Mint: React.FC = () => {
 
   return (
     <Layout>
-      <div className="flex md:flex-col flex-row font-kemcopixel  items-center justify-between   w-full">
+      <div className="flex md:flex-col flex-row font-dungeon  items-center justify-between   w-full">
         <div className="flex md:flex-1 flex-col md:gap-10 gap-[181px] items-start justify-start w-auto md:w-full">
           <div className="flex flex-col gap-[38px] items-start justify-start w-auto md:w-full">
             <div className="flex flex-col gap-[43px] items-start justify-start w-auto md:w-full">
@@ -102,7 +110,7 @@ export const Mint: React.FC = () => {
               >
                 The BEST PIXEL ART ON ETHEREUM 🔥
               </Text>
-              <Text className="font-bold font-kemcopixel leading-[30.00px] text-sm sm:text-[26px] md:text-[28px] text-shadow-ts3 text-white-A700_bc">
+              <Text className="font-bold font-dungeon leading-[30.00px] text-sm sm:text-[26px] md:text-[28px] text-shadow-ts3 text-white-A700_bc">
                 <>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry.
@@ -113,37 +121,34 @@ export const Mint: React.FC = () => {
                 </>
               </Text>
             </div>
-            <div
-              className="bg-cover bg-no-repeat flex flex-col h-[50px] items-end justify-start p-[11px] grayscale-[1]   md:w-full"
-              style={{
-                backgroundImage: "url('images/img_publicbtn.svg')",
-              }}
-            >
-              <div className="flex  items-center gap-2 justify-end mb-1.5 mr-3 ">
-                <Text className=" text-center w-full text-deep_purple-900 text-lg uppercase">
-                  PUBLIC MINT
-                </Text>
-                <Image
-                  className="h-[22px] ml-0.5 w-[21px]"
-                  src="images/img_arrowleft.svg"
-                  alt="arrowleft"
-                />
-              </div>
+
+            <div className="flex  items-center gap-2 justify-end mb-1.5 mr-3 ">
+              <Button
+                className="font-dungeon cursor-pointer h-[50px] text-center md:ml-[0] ml-[5px] mt-[95px] text-xl w-[230px]"
+
+                shape="round"
+                color="white_A700"
+                size="xs"
+                variant="fill"
+
+                onClick={() => {
+                  navigate('/whitelist');
+                }}
+              >
+                WhiteList Mint
+              </Button>
             </div>
           </div>
           <Social className="bg-gradient  flex sm:flex-col flex-row gap-[38px] h-[59px] md:h-auto items-center justify-center sm:px-5 px-6 rounded-[16px] shadow-bs1 w-auto sm:w-full" />
         </div>
         <div className="bg-cover bg-gradient1  bg-no-repeat flex sm:flex-1 flex-col font-joystix h-[729px] items-center justify-start py-6 shadow-bs2 w-[509px] sm:w-full">
           <div className="flex flex-col gap-2.5 items-center justify-start w-[77%] md:w-full">
-            <Button
-              className="font-kemcopixel cursor-pointer h-[41px] text-center text-xl w-[229px]"
-              shape="round"
-              color="white_A700"
-              size="xs"
-              variant="fill"
+            <Text
+              className="font-dungeon text-center text-xl w-[229px]"
+              style={{ color: 'white' }}
             >
               Mint X0GIES
-            </Button>
+            </Text>
             <div className="flex flex-col items-center justify-start w-auto sm:w-full">
               <div className="flex flex-row gap-[72px] items-start justify-start w-auto">
                 <Text
@@ -156,7 +161,7 @@ export const Mint: React.FC = () => {
                   className="text-base text-center text-white-A700 w-[106px]"
                   size="txtKemcoPixelBold18"
                 >
-                  {totalNftsMinted}/{MAX}
+                  {totalPublicNftsMinted}/{MAX}
                 </Text>
               </div>
               <div className="flex flex-col gap-3 items-end justify-start w-auto sm:w-full">
@@ -184,18 +189,37 @@ export const Mint: React.FC = () => {
                 </div>
               </div>
             </div>
-            <input value={noOfMints} onChange={handleSetNoOfMints} className="h-[50px] grayscale-[1]  w-[230px]" placeholder='No of Mints' />
-            <button
+            <input value={noOfMints} onChange={handleSetNoOfMints} className="h-[50px] grayscale-[1]  w-[230px]" placeholder='No of Mints' style={{
+              textAlign: 'center', backgroundColor: 'white',
+              color: '#000',
+              padding: '10px',
+              borderRadius: '5px',
+              boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)'
+            }} />
+            {/* <button
+              onClick={() => {
+                publicMint().then(() => { });
+              }}
+            > */}
+            <Button
+              className="font-dungeon cursor-pointer h-[50px] text-center text-xl w-[230px] grayscale-[1]"
+              shape="round"
+              color="white_A700"
+              size="xs"
+              variant="fill"
+
               onClick={() => {
                 publicMint().then(() => { });
               }}
             >
-              <Image
+              WhiteList Mint
+            </Button>
+            {/* <Image
                 className="h-[50px] grayscale-[1]  w-[230px]"
                 src="/images/mint.png"
                 alt="walletconnect_One"
               />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
